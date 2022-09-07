@@ -1,7 +1,7 @@
 import logo from "./logo.svg";
 import ReactDOM from "react-dom";
-import React from "react";
 import "./App.css";
+import React, { useState } from "react";
 
 class Evento extends React.Component {
   render() {
@@ -46,9 +46,80 @@ function App() {
           <TipoIngresso nome="Front-stage" valor="R$60,00" />
           <TipoIngresso nome="Pista" valor="R$30,00" />
         </ul>
+        <Example> </Example>
       </header>
     </div>
   );
+}
+
+class Example extends React.Component {
+  handleValue = (event) => {
+    event.preventDefault();
+    console.log(this.state.count);
+  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      count: 0,
+      valor: 0,
+    };
+  }
+
+  render() {
+    return (
+      <div>
+        <p>Contador: {this.state.count}</p>
+        <div></div>
+
+        <div onSubmit={this.handleValue}>
+          <label>
+            Adicionar:
+            <input
+              type="number"
+              onChange={(event) =>
+                this.setState({ valor: parseInt(event.target.value) })
+              }
+            />
+          </label>
+          <button
+            onClick={() =>
+              this.setState({
+                count: this.state.count + this.state.valor,
+              })
+            }
+          >
+            Adicionar
+          </button>
+        </div>
+        <div></div>
+        <div onSubmit={this.handleValue}>
+          <label>
+            Remover:
+            <input
+              type="number"
+              onChange={(event) =>
+                this.setState({ valor: parseInt(event.target.value) })
+              }
+            />
+          </label>
+          <button
+            onClick={() =>
+              this.setState({
+                count: this.state.count - this.state.valor,
+              })
+            }
+          >
+            Adicionar
+          </button>
+        </div>
+        <button
+          onClick={() => this.setState({ count: (this.state.count = 0) })}
+        >
+          Zerar
+        </button>
+      </div>
+    );
+  }
 }
 
 export default App;
